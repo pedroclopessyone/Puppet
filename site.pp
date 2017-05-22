@@ -283,7 +283,7 @@ class { '::mysql::server':
 
 mysql::db { 'puppettestdb':
   user     => 'pedroclopes',
-  password => 'Syone!',
+  password => 'Passw0rd',
   host     => 'localhost',
   grant    => ['SELECT', 'UPDATE'],
 }
