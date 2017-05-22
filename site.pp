@@ -178,18 +178,18 @@ class { 'apache':
 }
 
 
-apache::vhost { 'puppet-client2.syone.int non-ssl':
-  servername      => 'puppet-client2.syone.int',
+apache::vhost { 'puppet-client.syone.int non-ssl':
+  servername      => 'puppet-client.syone.int',
   port            => '80',
   docroot         => '/var/www/bacalhau',
   docroot_owner	  => 'apache',
   docroot_group   => 'apache',
   redirect_status => 'permanent',
-  redirect_dest   => 'https://puppet-client2.syone.int/'
+  redirect_dest   => 'https://puppet-client.syone.int/'
 }
 
-apache::vhost { 'puppet-client2.syone.int ssl':
-  servername => 'puppet-client2.syone.int',
+apache::vhost { 'puppet-client.syone.int ssl':
+  servername => 'puppet-client.syone.int',
   port       => '443',
   docroot    => '/var/www/bacalhau',
   ssl        => true,
