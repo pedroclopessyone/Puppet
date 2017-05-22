@@ -44,10 +44,10 @@ user { 'benfica':
 }
 
 user { 'plinha':
-	ensure 		=> present
+	ensure 		=> present,
 	comment 	=> 'Pedro Linha',
 	home 		=> '/home/plinha',
-	managehome 	=> true
+	managehome 	=> true,
 	uid 		=> '502',
 	gid 		=> '3092',
 	groups		=> ['seixal'],
