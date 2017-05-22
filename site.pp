@@ -18,6 +18,9 @@ $anotherone = ' Teste de sincronização Visual Studio Code c/ GIT
 
 '
 
+$variaveltest = ' Teste de sincronização Visual Studio Code c/ GIT
+
+'
 ############ \declaração de variáveis#################
 
 # cria o grupo margem com o GID 3091
