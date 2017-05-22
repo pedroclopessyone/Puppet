@@ -297,7 +297,7 @@ mysql::db { 'bacalhaudb':
 
 ########### NFS ############
 
-node puppet-server.syone.int {
+node server {
   include nfs::server
 
   ::nfs::server::export{ '/mnt/mountpoint':
@@ -306,7 +306,7 @@ node puppet-server.syone.int {
   }
 }
 
-node puppet-client.syone.int {
+node client {
   include '::nfs::client'
   Nfs::Client::Mount <<| |>> 
 }
