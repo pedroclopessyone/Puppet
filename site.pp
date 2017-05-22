@@ -14,7 +14,9 @@ $ficheirohtml = '<h1>NOVO SITE</h1>
 <h2>Managed by Puppet</h2>
 <h3>Pedro Cravo Lopes</h3>
 '
+$anotherone = ' Teste de sincronização Visual Studio Code c/ GIT
 
+'
 
 ############ \declaração de variáveis#################
 
@@ -153,24 +155,6 @@ class { 'apache':
   default_vhost => false,
 }
 
-/*
-apache::vhost { 'puppet-client2.syone.int non-ssl':
-  servername      => 'puppet-client2.syone.int',
-  port            => '80',
-  docroot         => '/var/www/redirect',
-  docroot_owner	  => 'apache',
-  docroot_group   => 'apache',
-  redirect_status => 'permanent',
-  redirect_dest   => 'https://puppet-client2.syone.int/'
-}
-
-apache::vhost { 'puppet-client2.syone.int ssl':
-  servername => 'puppet-client2.syone.int',
-  port       => '443',
-  docroot    => '/var/www/redirect',
-  ssl        => true,
-}
-*/
 
 apache::vhost { 'puppet-client2.syone.int non-ssl':
   servername      => 'puppet-client2.syone.int',
