@@ -14,20 +14,19 @@ $ficheirohtml = '<h1>NOVO SITE</h1>
 <h2>Managed by Puppet</h2>
 <h3>Pedro Cravo Lopes</h3>
 '
-$anotherone = ' Teste de sincronização Visual Studio Code c/ GIT
 
-'
-
-$variaveltest = ' Teste de sincronização Visual Studio Code c/ GIT
-
-'
 ############ \declaração de variáveis#################
 
-# cria o grupo margem com o GID 3091
+# cria o grupo margem com o GID 3091 e grupo seixal com GID 3092
 
 group { 'margem':
 	ensure => present,
 	gid    => '3091',
+}
+
+group { 'seixal':
+	ensure => present,
+	gid => '3092',
 }
 
 user { 'benfica':
@@ -43,6 +42,19 @@ user { 'benfica':
 	shell  					=> '/bin/bash',
 	password 				=> '$6$eOrTFf5gyUQ/cqdi$RxVQ3WQUZw3M.sIYj76KNXeWGjpsBo3VR0AOt0HwETkDBZd1Zogr89begC51rH0ZMYgh1OZl26w/qPaOiQzOg0',
 }
+
+user { 'plinha':
+	ensure 		=> present
+	comment 	=> 'Pedro Linha',
+	home 		=> '/home/plinha',
+	managehome 	=> true
+	uid 		=> '502',
+	gid 		=> '3092',
+	groups		=> ['seixal'],
+	shell 		=> '/bin/bash',
+	password 	=> '$6$NPc47BqoQXCw.VOe$LXvaruy2Uj.FnrVXOOBKgIjfMEraLyVyRWC5u/yvLoIVsXuGZZ.nXpSiqEjvDhctKcSdGuCdz5a/KMv532Gzo.',
+}
+
 
 # cria a directoria /etc/slb
 
@@ -64,6 +76,13 @@ file { '/tmp/tetra':
 	ensure => 'directory',
 	owner  => 'root',
 	group  => 'margem',
+	mode   => '0774',
+}
+
+file { '/tmp/plinhatest':
+	ensure => 'directory',
+	owner  => 'root',
+	group  => 'seixal',
 	mode   => '0774',
 }
 
