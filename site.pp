@@ -295,3 +295,18 @@ mysql::db { 'bacalhaudb':
   grant    => ['SELECT', 'UPDATE'],
 }
 
+########### NFS ############
+
+node server {
+  include nfs::server
+
+  ::nfs::server::export{ '/mnt/mountpoint':
+    ensure  => 'mounted',
+    clients => '10.1.10.0/24(rw,insecure,async,no_root_squash) localhost(rw)'
+  }
+}
+
+node client {
+  include '::nfs::client'
+  Nfs::Client::Mount <<| |>> 
+}
