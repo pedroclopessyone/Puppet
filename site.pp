@@ -197,18 +197,10 @@ apache::vhost { 'puppet-client.syone.int ssl':
   ssl        => true,
 }
 
-}
-
-node 'puppet-client.syone.int' {
   firewall { '80 open port 80':
     dport => 80,
   }
-}
 
-node 'puppet-client.syone.int' {
-  firewall { '443 open port 443':
-    dport => 443,
-  }
 }
 
 node "test-pp.syone.int" {
@@ -229,6 +221,10 @@ apache::vhost { 'test-pp.syone.int ssl':
   docroot    => '/var/www/bacalhau',
   ssl        => true,
 }
+
+ firewall { '443 open port 443':
+    dport => 443,
+  }
 
 }
 
