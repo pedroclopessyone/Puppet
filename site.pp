@@ -14,6 +14,7 @@ $ficheirohtml = '<h1>NOVO SITE</h1>
 <h2>Managed by Puppet</h2>
 <h3>Pedro Cravo Lopes</h3>
 '
+$ficheirovazio = ''
 
 ############ \declaração de variáveis#################
 
@@ -295,18 +296,22 @@ mysql::db { 'bacalhaudb':
   grant    => ['SELECT', 'UPDATE'],
 }
 
-########### NFS ############
+############ END MySQL section ##########
 
-node server {
-  include nfs::server
-
-  ::nfs::server::export{ '/mnt/mountpoint':
-    ensure  => 'mounted',
-    clients => '10.1.10.0/24(rw,insecure,async,no_root_squash) localhost(rw)'
-  }
+file { '/var/log/pp-agent.log':
+	ensure => file,
+	owner => 'root', 
+	group => 'root',
+	mode => 644,
+	content => "$ficheirovazio",
 }
 
-node client {
-  include '::nfs::client'
-  Nfs::Client::Mount <<| |>> 
+
+cron { 'runpuppetagent':
+	command		=> '/usr/bin/puppet agent -t --verbose --debug &> /var/log/pp-agent.log',
+	user 		=> 'root',
+	month		=> '*',
+	monthday	=> '*',
+	hour		=> '*/5', # runs every 5 hours
+	minute		=> '*',
 }
