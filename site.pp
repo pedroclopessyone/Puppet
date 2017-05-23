@@ -197,7 +197,7 @@ apache::vhost { 'puppet-client.syone.int ssl':
   ssl        => true,
 }
 
-}
+} # end node puppet-client.syone.int
 
 node "test-pp.syone.int" {
   
@@ -218,7 +218,8 @@ apache::vhost { 'test-pp.syone.int ssl':
   ssl        => true,
 }
 
-}
+} # end node test-pp.syone.int
+
 ############## FIREWALL RULES FOR APACHE #################
 exec { 'firewall-cmd --permanent --add-service=http':
   		path    => ['/usr/bin'], 
