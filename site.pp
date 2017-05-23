@@ -178,7 +178,8 @@ class { 'apache':
   default_vhost => false,
 }
 
-
+node "puppet-client.syone.int" {
+  
 apache::vhost { 'puppet-client.syone.int non-ssl':
   servername      => 'puppet-client.syone.int',
   port            => '80',
@@ -196,6 +197,28 @@ apache::vhost { 'puppet-client.syone.int ssl':
   ssl        => true,
 }
 
+}
+
+node "test-pp.syone.int" {
+  
+apache::vhost { 'test-pp.syone.int non-ssl':
+  servername      => 'test-pp.syone.int',
+  port            => '80',
+  docroot         => '/var/www/bacalhau',
+  docroot_owner	  => 'apache',
+  docroot_group   => 'apache',
+  redirect_status => 'permanent',
+  redirect_dest   => 'https://test-pp.syone.int/'
+}
+
+apache::vhost { 'test-pp.syone.int ssl':
+  servername => 'test-pp.syone.int',
+  port       => '443',
+  docroot    => '/var/www/bacalhau',
+  ssl        => true,
+}
+
+}
 exec { 'cp -va index.html /var/www/bacalhau':
   cwd     => '/tmp/tetra', # vai buscar o index.html a este directorio
   path    => ['/usr/bin', '/usr/sbin',], # vai correr o comando 'cp' a partir destes directorios
@@ -298,20 +321,4 @@ mysql::db { 'bacalhaudb':
 
 ############ END MySQL section ##########
 
-file { '/var/log/pp-agent.log':
-	ensure => file,
-	owner => 'root', 
-	group => 'root',
-	mode => 644,
-	content => "$ficheirovazio",
-}
 
-
-cron { 'runpuppetagent':
-	command		=> '/usr/bin/puppet agent -t --verbose --debug &> /var/log/pp-agent.log',
-	user 		=> 'root',
-	month		=> '*',
-	monthday	=> '*',
-	hour		=> '*/5', # runs every 5 hours
-	minute		=> '*',
-}
