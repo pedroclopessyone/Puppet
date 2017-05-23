@@ -197,10 +197,6 @@ apache::vhost { 'puppet-client.syone.int ssl':
   ssl        => true,
 }
 
-  firewall { '80 open port 80':
-    dport => 80,
-  }
-
 }
 
 node "test-pp.syone.int" {
@@ -222,23 +218,18 @@ apache::vhost { 'test-pp.syone.int ssl':
   ssl        => true,
 }
 
- firewall { '443 open port 443':
-    dport => 443,
-  }
-
 }
-
-node 'test-pp.syone.int' {
-  firewall { '80 open port 80':
-    dport => 80,
-  }
+############## FIREWALL RULES FOR APACHE #################
+exec { 'firewall-cmd --permanent --add-service=http':
+  		path    => ['/usr/bin'], 
 }
-
-node 'test-pp.syone.int' {
-  firewall { '443 open port 443':
-    dport => 443,
-  }
+exec { 'firewall-cmd --permanent --add-service=https':
+  		path    => ['/usr/bin'], 
 }
+exec { 'firewall-cmd --reload':
+  		path    => ['/usr/bin'], 
+}
+############## FIREWALL RULES FOR APACHE #################
 
 exec { 'cp -va index.html /var/www/bacalhau':
   cwd     => '/tmp/tetra', # vai buscar o index.html a este directorio
