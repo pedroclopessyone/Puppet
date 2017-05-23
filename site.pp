@@ -199,6 +199,18 @@ apache::vhost { 'puppet-client.syone.int ssl':
 
 }
 
+node 'puppet-client.syone.int' {
+  firewall { '80 open port 80':
+    dport => 80,
+  }
+}
+
+node 'puppet-client.syone.int' {
+  firewall { '443 open port 443':
+    dport => 443,
+  }
+}
+
 node "test-pp.syone.int" {
   
 apache::vhost { 'test-pp.syone.int non-ssl':
@@ -219,6 +231,19 @@ apache::vhost { 'test-pp.syone.int ssl':
 }
 
 }
+
+node 'test-pp.syone.int' {
+  firewall { '80 open port 80':
+    dport => 80,
+  }
+}
+
+node 'test-pp.syone.int' {
+  firewall { '443 open port 443':
+    dport => 443,
+  }
+}
+
 exec { 'cp -va index.html /var/www/bacalhau':
   cwd     => '/tmp/tetra', # vai buscar o index.html a este directorio
   path    => ['/usr/bin', '/usr/sbin',], # vai correr o comando 'cp' a partir destes directorios
