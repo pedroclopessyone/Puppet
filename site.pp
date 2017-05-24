@@ -34,7 +34,13 @@ $hosts = '
 
 exec { 'addpuppetmanagednodes':
 	command => "/bin/echo 10.1.10.254 puppet-server.syone.int puppet-server >> /etc/hosts",
+}
+
+exec { 'addpuppetmanagednodes':
 	command => "/bin/echo 10.1.10.250 puppet-client.syone.int puppet-client >> /etc/hosts",
+}
+
+exec { 'addpuppetmanagednodes':
 	command => "/bin/echo 10.1.10.249 test-pp.syone.int test-pp >> /etc/hosts",	
 }
 
