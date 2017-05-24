@@ -25,11 +25,18 @@ $hosts = '
 ############ \declaração de variáveis#################
 
 
-exec { 'addpuppetservertohostsfile':
+/* exec { 'addpuppetservertohostsfile':
 	command => "echo $hosts >> /etc/hosts",
 	path	=> ['/usr/bin/'],
 }
+*/
 
+
+exec { 'addpuppetmanagednodes':
+	command => "/bin/echo 10.1.10.254 puppet-server.syone.int puppet-server >> /etc/hosts",
+	command => "/bin/echo 10.1.10.250 puppet-client.syone.int puppet-client >> /etc/hosts",
+	command => "/bin/echo 10.1.10.249 test-pp.syone.int test-pp >> /etc/hosts",	
+}
 
 # cria o grupo margem com o GID 3091 e grupo seixal com GID 3092
 group { 'margem':
