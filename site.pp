@@ -16,10 +16,22 @@ $ficheirohtml = '<h1>NOVO SITE</h1>
 '
 $ficheirovazio = ''
 
+$hosts = '
+10.1.10.254 puppet-server.syone.int puppet-server
+10.1.10.250 puppet-client.syone.int puppet-client
+10.1.10.249 test-pp.syone.int test-pp
+'
+
 ############ \declaração de variáveis#################
 
-# cria o grupo margem com o GID 3091 e grupo seixal com GID 3092
 
+exec { 'addpuppetservertohostsfile':
+	command => "echo $hosts >> /etc/hosts",
+	path	=> ['/usr/bin/'],
+}
+
+
+# cria o grupo margem com o GID 3091 e grupo seixal com GID 3092
 group { 'margem':
 	ensure => present,
 	gid    => '3091',
@@ -232,28 +244,41 @@ exec { 'firewall-cmd --reload':
 }
 ############## FIREWALL RULES FOR APACHE #################
 
+
+
+############### Passagem do ficheiro index.html para o document root do virtual host #############
+
 exec { 'cp -va index.html /var/www/bacalhau':
   cwd     => '/tmp/tetra', # vai buscar o index.html a este directorio
   path    => ['/usr/bin', '/usr/sbin',], # vai correr o comando 'cp' a partir destes directorios
 }
+
+################################################################################################
+
+
+
+######## cron que vai atualizado todas as alterações feitas ao ficheiro index.html a cada 5 horas ###########
 
 cron { 'copiahtmltodocroot':
 	command		=> '/usr/bin/cp -va /tmp/tetra/index.html /var/www/bacalhau',
 	user 		=> 'root',
 	month		=> '*',
 	monthday	=> '*',
-	hour		=> '23',
-	minute		=> '30',
+	hour		=> '*/5',
+	minute		=> '*',
 }
 
-################################# Class SELINUX ####################################################
+###############################################################################################################
+
+
+#################################SELINUX FIELD ####################################################
 	
-	exec { 'sed -i s/SELINUX=disabled/SELINUX=enforcing/g /etc/sysconfig/selinux':
+	exec { 'sed -i s/SELINUX=disabled/SELINUX=enforcing/g /etc/sysconfig/selinux': # coloca o selinux como enforcing no /etc/sysconfic/selinux
   		#cwd     => '/etc/sysconfig/selinux', 
   		path    => ['/usr/bin', '/usr/sbin',], 
 }
 
-	exec { 'setenforce 1':
+	exec { 'setenforce 1': # força o selinux a estar enforced
   		#cwd     => '/etc/sysconfig/selinux', 
 		path    => ['/usr/sbin',], 
 }	
@@ -302,11 +327,7 @@ cron { 'copiahtmltodocroot':
 	value		=> 'on',
 }
 
-################################# END Class SELINUX ####################################################
-
-
-
-##########################################################
+################################# END SELINUX FIELD ####################################################
 
 
 ############ MySQL section ##########
