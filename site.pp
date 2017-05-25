@@ -21,7 +21,10 @@ $hosts = '
 10.1.10.250 puppet-client.syone.int puppet-client
 10.1.10.249 test-pp.syone.int test-pp
 '
+$anotherone = '
 
+Qualquer coisa...
+'
 ############ \declaração de variáveis#################
 
 
