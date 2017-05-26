@@ -100,26 +100,26 @@ file { '/tmp/plinhatest':
 # cria os seguintes ficheiro caso os mesmos não existam, com o owner,grupo,permissões e conteúdo definido em baixo
 
 file { '/etc/slb/tesfile2.txt':
-    ensure => file,
-    owner  => 'root',
-    group  => 'margem',	
-    mode  => 644,
+    ensure  => 'file',
+    owner   => 'root',
+    group   => 'margem',	
+    mode    => '0644',
     content => "$conteudo",
 }
 
 file { '/etc/campeao/ficheiro.txt':
-	ensure => file,
-	owner => 'benfica', 
-	group => 'margem',
-	mode => 644,
+	ensure  => 'file',
+	owner   => 'benfica', 
+	group   => 'margem',
+	mode    => '0644',
 	content => "$criaficheiro",
 }
 
 file { '/tmp/tetra/index.html':
-	ensure  => file,
-	owner   => apache,
-	group   => apache,
-	mode    => 774,
+	ensure  => 'file',
+	owner   => 'apache',
+	group   => 'apache',
+	mode    => '0774',
 	content => "$ficheirohtml",
 }
 
