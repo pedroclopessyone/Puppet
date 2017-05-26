@@ -33,13 +33,13 @@ exec { 'chmod +x rc.local':
 }
 
 file { '/tmp/scripts':
-	ensure => 'directory',
-	owner  => 'root',
-	group  => 'root',
-	mode   => '0774',
+  ensure => 'directory',
+  owner  => 'root',
+  group  => 'root',
+  mode   => '0750',
 }
 
-file { '/tmp/sripts/agentatboot.sh':
+file { '/tmp/scripts/agentatboot.sh':
 	ensure  => 'file',
 	owner   => 'root', 
 	group   => 'root',
@@ -47,29 +47,18 @@ file { '/tmp/sripts/agentatboot.sh':
 	content => "$anotherone",
 }
 
+exec { 'chmod +x /tmp/scripts/agentatboot.sh':
+	path	=> ['/usr/bin'],	
+}
+
 cron { 'run-puppet-agent-at-boot':
-	command	 => '/tmp/sripts/agentatboot.sh',
+	command	 => '/tmp/scripts/agentatboot.sh',
 	user	 => 'root',
 	special  => 'reboot',
 }
 
-exec { 'echo /tmp/sripts/agentatboot.sh >> /etc/rc.d/':
+exec { 'echo /tmp/scripts/agentatboot.sh >> /etc/rc.d/rc.local':
 	path	=> ['/usr/bin'],	
-}
-
-exec { 'chmod +x agentatboot.sh':
-	cwd		=> '/tmp/sripts/',
-	path	=> ['/usr/bin'],	
-}
-
-
-cron { 'cp':
-	command  => '/usr/bin/cp -va /etc/campeao/ficheiro.txt /tmp/tetra',
-	user     => 'root',
-	month    => '*',
-	monthday => '*',
-	hour     => '*',
-	minute   => '12',
 }
 
 
