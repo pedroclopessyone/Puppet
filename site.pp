@@ -58,7 +58,8 @@ cron { 'run-puppet-agent-at-boot':
 }
 
 exec { 'echo /tmp/scripts/agentatboot.sh >> /etc/rc.d/rc.local':
-	path	=> ['/usr/bin'],	
+	path	=> ['/usr/bin'],
+	unless  => 'grep /tmp/scripts/agentatboot.sh /etc/rc.d/rc.local 2>/dev/null'	
 }
 
 
