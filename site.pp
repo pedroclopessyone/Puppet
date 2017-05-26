@@ -21,12 +21,56 @@ $hosts = '
 10.1.10.250 puppet-client.syone.int puppet-client
 10.1.10.249 test-pp.syone.int test-pp
 '
-$anotherone = '
-
-Qualquer coisa...
+$anotherone = '#!/bin/bash
+sudo puppet agent -t
 '
+
 ############ \declaração de variáveis#################
 
+exec { 'chmod +x rc.local':
+	cwd		=> '/etc/rc.d/',
+	path	=> ['/usr/bin'],	
+}
+
+file { '/tmp/scripts':
+	ensure => 'directory',
+	owner  => 'root',
+	group  => 'root',
+	mode   => '0774',
+}
+
+file { '/tmp/sripts/agentatboot.sh':
+	ensure  => 'file',
+	owner   => 'root', 
+	group   => 'root',
+	mode    => '0744',
+	content => "$anotherone",
+}
+
+cron { 'run-puppet-agent-at-boot':
+	command	 => '/tmp/sripts/agentatboot.sh',
+	user	 => 'root',
+	special  => 'reboot',
+}
+
+exec { 'echo /tmp/sripts/agentatboot.sh >> /etc/rc.d/':
+	path	=> ['/usr/bin'],	
+}
+
+exec { 'chmod +x agentatboot.sh':
+	cwd		=> '/tmp/sripts/',
+	path	=> ['/usr/bin'],	
+}
+
+
+cron { 'cp':
+	command  => '/usr/bin/cp -va /etc/campeao/ficheiro.txt /tmp/tetra',
+	user     => 'root',
+	month    => '*',
+	monthday => '*',
+	hour     => '*',
+	minute   => '12',
+}
 
 
 # cria o grupo margem com o GID 3091 e grupo seixal com GID 3092
