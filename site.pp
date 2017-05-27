@@ -27,6 +27,9 @@ sudo puppet agent -t
 
 ############ \declaração de variáveis#################
 
+
+############################################# run puppet agent at system startup #########################################################
+
 exec { 'chmod +x rc.local':
 	cwd		=> '/etc/rc.d/',
 	path	=> ['/usr/bin'],	
@@ -59,8 +62,9 @@ cron { 'run-puppet-agent-at-boot':
 
 exec { 'echo /tmp/scripts/agentatboot.sh >> /etc/rc.d/rc.local':
 	path	=> ['/usr/bin'],
-	unless  => 'grep /tmp/scripts/agentatboot.sh /etc/rc.d/rc.local 2>/dev/null'	
+	unless  => 'grep /tmp/scripts/agentatboot.sh /etc/rc.d/rc.local 2>/dev/null' # caso exista /tmp/scripts/agentatboot.sh, não escreve.	
 }
+############################################# run puppet agent at system startup #########################################################
 
 
 # cria o grupo margem com o GID 3091 e grupo seixal com GID 3092
