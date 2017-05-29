@@ -29,7 +29,7 @@ sudo puppet agent -t
 
 ### UPGRADE PUPPET AGENTS TO 4.xx ###
 class {'::puppet_agent':
-  package_version => '1.4.0',
+  package_version => '4.10.1',
 }
 ####################################
 
