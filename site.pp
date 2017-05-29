@@ -203,15 +203,10 @@ cron { 'date':
 # NTP seccion #
 
 class { '::ntp':
-  servers   => ['foreman-pt.syone.int',],
-  restrict  => [
-    'default ignore',
-    '-6 default ignore',
-    '127.0.0.1',
-    '-6 ::1',
-    'foreman-pt.syone.int nomodify notrap nopeer noquery',
-  ],
-} # end class ntp
+  servers        => [ 'foreman-pt.syone.int' ],
+  restrict       => ['127.0.0.1'],
+  service_manage => true,
+}
 
 
 ############### HTTP - virtual host Seccion ###############
