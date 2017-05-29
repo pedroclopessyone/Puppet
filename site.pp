@@ -30,20 +30,19 @@ sudo puppet agent -t
 
 ############################################# run puppet agent at system startup #########################################################
 
-
 exec { 'chmod +x rc.local':
 	cwd		=> '/etc/rc.d/',
 	path	=> ['/usr/bin'],	
 }
 
-file { '/tmp/scripts':
+file { '/tmp/scripts': # cria a directoria /tmp/scripts
   ensure => 'directory',
   owner  => 'root',
   group  => 'root',
   mode   => '0750',
 }
 
-file { '/tmp/scripts/agentatboot.sh':
+file { '/tmp/scripts/agentatboot.sh': # cria o ficheiro agentatboot.sh com o conteudo $anotherone
 	ensure  => 'file',
 	owner   => 'root', 
 	group   => 'root',
@@ -61,7 +60,7 @@ cron { 'run-puppet-agent-at-boot':
 	special  => 'reboot',
 }
 
-exec { 'echo /tmp/scripts/agentatboot.sh >> /etc/rc.d/rc.local':
+exec { 'echo #/tmp/scripts/agentatboot.sh >> /etc/rc.d/rc.local':
 	path	=> ['/usr/bin'],
 	unless  => 'grep /tmp/scripts/agentatboot.sh /etc/rc.d/rc.local 2>/dev/null' # caso exista /tmp/scripts/agentatboot.sh, não escreve.	
 }
@@ -243,15 +242,26 @@ apache::vhost { 'foreman-client.syone.int ssl':
 
 
 ############## FIREWALL RULES FOR APACHE #################
+class firewall_rules_for_Apache {
+	
 exec { 'firewall-cmd --permanent --add-service=http':
   		path    => ['/usr/bin'], 
+		unless  => 'firewall-cmd --permanent --list-all | grep http 2>/dev/null' 
 }
+
 exec { 'firewall-cmd --permanent --add-service=https':
   		path    => ['/usr/bin'], 
+		unless  => 'firewall-cmd --permanent --list-all | grep https 2>/dev/null'  
 }
+
 exec { 'firewall-cmd --reload':
   		path    => ['/usr/bin'], 
 }
+
+} # end class firewall_rules_for_Apache
+
+
+
 ############## FIREWALL RULES FOR APACHE #################
 
 
@@ -281,17 +291,23 @@ cron { 'copiahtmltodocroot':
 
 
 #################################SELINUX FIELD ####################################################
-	
-	exec { 'sed -i s/SELINUX=disabled/SELINUX=enforcing/g /etc/sysconfig/selinux': # coloca o selinux como enforcing no /etc/sysconfic/selinux
-  		#cwd     => '/etc/sysconfig/selinux', 
+
+class selinux_enforce {
+
+	exec { 'sed -i s/SELINUX=disabled/SELINUX=enforcing/g /etc/sysconfig/selinux': # coloca o selinux como enforcing no /etc/sysconfic/selinux 
   		path    => ['/usr/bin', '/usr/sbin',], 
 }
 
 	exec { 'setenforce 1': # força o selinux a estar enforced
-  		#cwd     => '/etc/sysconfig/selinux', 
 		path    => ['/usr/sbin',], 
-}	
+}
 
+} # end class selinux_enforce 
+
+
+
+class enable_bool {
+	
 	selboolean { 'httpd_can_network_connect':
 	name		=> 'httpd_can_network_connect',
 	persistent	=> 'true',
@@ -335,6 +351,10 @@ cron { 'copiahtmltodocroot':
 	provider	=> 'getsetsebool',
 	value		=> 'on',
 }
+
+} # end class enable_bool
+
+
 
 ################################# END SELINUX FIELD ####################################################
 
