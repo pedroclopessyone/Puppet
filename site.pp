@@ -30,6 +30,19 @@ sudo puppet agent -t
 
 ############################################# run puppet agent at system startup #########################################################
 
+# Class: 
+#
+#
+class enable_service {
+ service { "puppet":
+	 ensure     => running,
+	 enable     => true,
+	 hasrestart => true,
+	 hasstatus  => true,
+ }	
+	enable	=> true,
+}
+
 exec { 'chmod +x rc.local':
 	cwd		=> '/etc/rc.d/',
 	path	=> ['/usr/bin'],	
@@ -215,7 +228,6 @@ cron { 'date':
 
 ############### HTTP - virtual host Seccion ###############
 
-
 class { 'apache':
   default_vhost => false,
 }
@@ -241,6 +253,7 @@ apache::vhost { 'foreman-client.syone.int ssl':
 
 } # end node puppet-client.syone.int
 
+
 ############## FIREWALL RULES FOR APACHE #################
 exec { 'firewall-cmd --permanent --add-service=http':
   		path    => ['/usr/bin'], 
@@ -261,7 +274,6 @@ exec { 'cp -va index.html /var/www/bacalhau':
   cwd     => '/tmp/tetra', # vai buscar o index.html a este directorio
   path    => ['/usr/bin', '/usr/sbin',], # vai correr o comando 'cp' a partir destes directorios
 }
-
 ################################################################################################
 
 
