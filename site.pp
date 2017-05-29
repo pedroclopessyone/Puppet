@@ -40,8 +40,8 @@ class enable_service {
 	 hasrestart => true,
 	 hasstatus  => true,
  }	
-	enable	=> true,
-}
+	
+} # end class enable_service
 
 exec { 'chmod +x rc.local':
 	cwd		=> '/etc/rc.d/',
