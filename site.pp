@@ -202,15 +202,16 @@ cron { 'date':
 
 # NTP seccion #
 
-
-##########################################
-# o campo 'service' em baixo foi comentado porque já está declarado no ficheiro /etc/puppet/modules/ntp/manifests/init.pp e estava a dar conflito quando se corria o agente
-#########################################
-#service { 'ntpd':
-#    enable      => true,
-#    ensure      => running,
-#    require	=> Class["ntp"],
-#} # end service ntpd declaration
+class { '::ntp':
+  servers   => ['foreman-pt.syone.int',],
+  restrict  => [
+    'default ignore',
+    '-6 default ignore',
+    '127.0.0.1',
+    '-6 ::1',
+    'foreman-pt.syone.int nomodify notrap nopeer noquery',
+  ],
+} # end class ntp
 
 
 ############### HTTP - virtual host Seccion ###############
