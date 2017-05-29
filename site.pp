@@ -30,18 +30,6 @@ sudo puppet agent -t
 
 ############################################# run puppet agent at system startup #########################################################
 
-# Class: 
-#
-#
-class enable_service {
- service { "puppet":
-	 ensure     => running,
-	 enable     => true,
-	 hasrestart => true,
-	 hasstatus  => true,
- }	
-	
-} # end class enable_service
 
 exec { 'chmod +x rc.local':
 	cwd		=> '/etc/rc.d/',
