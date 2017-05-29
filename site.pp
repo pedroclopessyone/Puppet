@@ -27,6 +27,12 @@ sudo puppet agent -t
 
 ############ \declaração de variáveis#################
 
+### UPGRADE PUPPET AGENTS TO 4.xx ###
+class {'::puppet_agent':
+  package_version => '1.4.0',
+}
+####################################
+
 
 ############################################# run puppet agent at system startup #########################################################
 
