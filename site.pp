@@ -73,7 +73,7 @@ user { 'pablo':
 	ensure   => present,
 	comment  => 'Pablo Escobar',
 	home     => '/home/pablo',
-	managehome	=> true
+	managehome	=> true,
 	groups   => ['escobar'],
 	password => '$6$mMZW9lTDGAxpj0b3$ENygOoQYNfsIx/SluYhpS1q3rpxKoxesTnOSinnYlTt5Em0tM6yLbwZmUHPeB3kPaOPu0HxC5uw/OTp7Acj1z/',
 	shell    => '/bin/bash',	
