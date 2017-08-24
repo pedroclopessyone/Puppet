@@ -229,11 +229,11 @@ apache::vhost { 'foreman-client.syone.int ssl':
 ############## FIREWALL RULES FOR APACHE #################
 exec { 'firewall-cmd --permanent --add-service=http':
   		path    => ['/usr/bin'],
-		unless  => "firewall-cmd --permanent --list-all | grep -w http" 
+		unless  => "firewall-cmd --permanent --list-all | grep -w http",
 }
 
 exec { 'firewall-cmd --permanent --add-service=https':
-		unless  => "firewall-cmd --permanent --list-all | grep -w https" 
+		unless  => "firewall-cmd --permanent --list-all | grep -w https", 
   		path    => ['/usr/bin'], 
 }
 
