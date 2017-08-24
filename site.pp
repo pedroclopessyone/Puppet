@@ -250,7 +250,7 @@ exec { 'firewall-cmd --reload':
 exec { 'cp -va index.html /var/www/bacalhau':
   cwd       => '/tmp/tetra', # vai buscar o index.html a este directorio
   path      => ['/usr/bin', '/usr/sbin',], # vai correr o comando 'cp' a partir destes directorios
-  unless	=> "find /var/www -name "bacalhau"",
+  unless	=> "find /var/www -name bacalhau",
 }
 
 ################################################################################################
