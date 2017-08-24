@@ -248,8 +248,9 @@ exec { 'firewall-cmd --reload':
 ############### Passagem do ficheiro index.html para o document root do virtual host #############
 
 exec { 'cp -va index.html /var/www/bacalhau':
-  cwd     => '/tmp/tetra', # vai buscar o index.html a este directorio
-  path    => ['/usr/bin', '/usr/sbin',], # vai correr o comando 'cp' a partir destes directorios
+  cwd       => '/tmp/tetra', # vai buscar o index.html a este directorio
+  path      => ['/usr/bin', '/usr/sbin',], # vai correr o comando 'cp' a partir destes directorios
+  unless	=> "find /var/www -name "bacalhau"",
 }
 
 ################################################################################################
@@ -275,6 +276,7 @@ cron { 'copiahtmltodocroot':
 	exec { 'sed -i s/SELINUX=disabled/SELINUX=enforcing/g /etc/sysconfig/selinux': # coloca o selinux como enforcing no /etc/sysconfic/selinux
   		#cwd     => '/etc/sysconfig/selinux', 
   		path    => ['/usr/bin', '/usr/sbin',], 
+		unless	=> "grep SELINUX=enforcing /etc/sysconfig/selinux",
 }
 
 	exec { 'setenforce 1': # força o selinux a estar enforced
