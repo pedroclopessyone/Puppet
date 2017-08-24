@@ -78,16 +78,16 @@ user { 'pablo':
 	shell    => '/bin/sh',	
 }
 
-ssh_authorized_key { 'foreman-proxy@foreman.redhat.local':
-  user => 'foreman-proxy',
-  type => 'ssh-rsa',
-  key  => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDDNHDxwrp7Dz3zRmH/utQtsW7rQYDJocey0ouPGN2+lItd5kKwj3azkWWYq0iXZEyQ/wGI/KxVGA+SYDJtwOemkuUnwWxjqbidt9nvaDRsHB7yOkwPmjrRXTicgTVMIhFt1FUcuOAeQuFx0/KCwDwUgtLKnkArj0sivBSacJC42OtjYK0oZJw0ehxDAr3FByH37HncN/f+DsAey0lr2lFWYpExKnMpCMMu68dyenNFfDdIdbX41JQNzqnCng6yEdKWeE/nkS8Je616+/m1sPEcl8O/z78Iw0onu/lGqfj2HvtSQZh19NLPwgO/orzlKbjnEiPcd7ovYo7DLjGDYFP9',
-}
+#ssh_authorized_key { 'foreman-proxy@foreman.redhat.local':
+#  user => 'foreman-proxy',
+#  type => 'ssh-rsa',
+#  key  => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDDNHDxwrp7Dz3zRmH/utQtsW7rQYDJocey0ouPGN2+lItd5kKwj3azkWWYq0iXZEyQ/wGI/KxVGA+SYDJtwOemkuUnwWxjqbidt9nvaDRsHB7yOkwPmjrRXTicgTVMIhFt1FUcuOAeQuFx0/KCwDwUgtLKnkArj0sivBSacJC42OtjYK0oZJw0ehxDAr3FByH37HncN/f+DsAey0lr2lFWYpExKnMpCMMu68dyenNFfDdIdbX41JQNzqnCng6yEdKWeE/nkS8Je616+/m1sPEcl8O/z78Iw0onu/lGqfj2HvtSQZh19NLPwgO/orzlKbjnEiPcd7ovYo7DLjGDYFP9',
+#}
 
-user { 'foreman-proxy':
-  ensure         => present,
-  purge_ssh_keys => true,
-}
+#user { 'foreman-proxy':
+#  ensure         => present,
+#  purge_ssh_keys => true,
+#}
 
 # cria a directoria /etc/slb
 
