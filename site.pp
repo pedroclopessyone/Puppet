@@ -70,12 +70,13 @@ user { 'plinha':
 }
 
 user { 'pablo':
+	ensure   => present,
 	comment  => 'Pablo Escobar',
 	home     => '/home/pablo',
-	ensure   => present,
-	groups   => 'escobar',
+	managehome	=> true
+	groups   => ['escobar'],
 	password => '$6$mMZW9lTDGAxpj0b3$ENygOoQYNfsIx/SluYhpS1q3rpxKoxesTnOSinnYlTt5Em0tM6yLbwZmUHPeB3kPaOPu0HxC5uw/OTp7Acj1z/',
-	shell    => '/bin/sh',	
+	shell    => '/bin/bash',	
 }
 
 #ssh_authorized_key { 'foreman-proxy@foreman.redhat.local':
