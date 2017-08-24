@@ -22,7 +22,6 @@ $hosts = '
 10.1.10.249 test-pp.syone.int test-pp
 '
 $anotherone = '
-
 Qualquer coisa...
 '
 ############ \declaração de variáveis#################
@@ -38,6 +37,10 @@ group { 'margem':
 group { 'seixal':
 	ensure => present,
 	gid => '3092',
+}
+
+group { 'escobar':
+	gid => '3093',
 }
 
 user { 'benfica':
@@ -66,6 +69,25 @@ user { 'plinha':
 	password 	=> '$6$NPc47BqoQXCw.VOe$LXvaruy2Uj.FnrVXOOBKgIjfMEraLyVyRWC5u/yvLoIVsXuGZZ.nXpSiqEjvDhctKcSdGuCdz5a/KMv532Gzo.',
 }
 
+user { 'pablo':
+	comment => 'Pablo Escobar',
+	home => '/home/pablo',
+	ensure => present,
+	groups => 'escobar',
+	password => '$6$mMZW9lTDGAxpj0b3$ENygOoQYNfsIx/SluYhpS1q3rpxKoxesTnOSinnYlTt5Em0tM6yLbwZmUHPeB3kPaOPu0HxC5uw/OTp7Acj1z/'
+	shell => '/bin/sh'	
+}
+
+ssh_authorized_key { 'foreman-proxy@foreman.redhat.local':
+  user => 'foreman-proxy',
+  type => 'ssh-rsa',
+  key  => 'AAAAB3NzaC1yc2EAAAADAQABAAABAQDDNHDxwrp7Dz3zRmH/utQtsW7rQYDJocey0ouPGN2+lItd5kKwj3azkWWYq0iXZEyQ/wGI/KxVGA+SYDJtwOemkuUnwWxjqbidt9nvaDRsHB7yOkwPmjrRXTicgTVMIhFt1FUcuOAeQuFx0/KCwDwUgtLKnkArj0sivBSacJC42OtjYK0oZJw0ehxDAr3FByH37HncN/f+DsAey0lr2lFWYpExKnMpCMMu68dyenNFfDdIdbX41JQNzqnCng6yEdKWeE/nkS8Je616+/m1sPEcl8O/z78Iw0onu/lGqfj2HvtSQZh19NLPwgO/orzlKbjnEiPcd7ovYo7DLjGDYFP9',
+}
+
+user { 'foreman-proxy':
+  ensure         => present,
+  purge_ssh_keys => true,
+}
 
 # cria a directoria /etc/slb
 
@@ -178,7 +200,7 @@ cron { 'date':
 ############### HTTP - virtual host Seccion ###############
 
 
-class { 'apache':
+/*class { 'apache':
   default_vhost => false,
 }
 
@@ -202,14 +224,19 @@ apache::vhost { 'foreman-client.syone.int ssl':
 }
 
 } # end node puppet-client.syone.int
+*/
 
 ############## FIREWALL RULES FOR APACHE #################
 exec { 'firewall-cmd --permanent --add-service=http':
-  		path    => ['/usr/bin'], 
+  		path    => ['/usr/bin'],
+		unless  => "firewall-cmd --permanent --list-all | grep -w http" 
 }
+
 exec { 'firewall-cmd --permanent --add-service=https':
+		unless  => "firewall-cmd --permanent --list-all | grep -w https" 
   		path    => ['/usr/bin'], 
 }
+
 exec { 'firewall-cmd --reload':
   		path    => ['/usr/bin'], 
 }
