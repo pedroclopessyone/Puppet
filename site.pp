@@ -328,6 +328,9 @@ cron { 'copiahtmltodocroot':
 	value		=> 'on',
 }
 
+class { '::chrony':
+  servers => ['pool.ntp.org',],
+}
 ################################# END SELINUX FIELD ####################################################
 
 
