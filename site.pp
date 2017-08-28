@@ -51,8 +51,8 @@ user { 'benfica':
   	uid    					=> 501,
 	gid 					=> 3091,
 	groups					=> ['margem', 'wheel'],
-	password_max_age		=> 36000,
-	password_min_age		=> 1,
+	password_max_age			=> 36000,
+	password_min_age			=> 1,
 	shell  					=> '/bin/bash',
 	password 				=> '$6$eOrTFf5gyUQ/cqdi$RxVQ3WQUZw3M.sIYj76KNXeWGjpsBo3VR0AOt0HwETkDBZd1Zogr89begC51rH0ZMYgh1OZl26w/qPaOiQzOg0',
 }
@@ -70,13 +70,13 @@ user { 'plinha':
 }
 
 user { 'pablo':
-	ensure   => present,
-	comment  => 'Pablo Escobar',
-	home     => '/home/pablo',
+	ensure          => present,
+	comment  	=> 'Pablo Escobar',
+	home     	=> '/home/pablo',
 	managehome	=> true,
-	groups   => ['escobar'],
-	password => '$6$mMZW9lTDGAxpj0b3$ENygOoQYNfsIx/SluYhpS1q3rpxKoxesTnOSinnYlTt5Em0tM6yLbwZmUHPeB3kPaOPu0HxC5uw/OTp7Acj1z/',
-	shell    => '/bin/bash',	
+	groups          => ['escobar'],
+	password        => '$6$mMZW9lTDGAxpj0b3$ENygOoQYNfsIx/SluYhpS1q3rpxKoxesTnOSinnYlTt5Em0tM6yLbwZmUHPeB3kPaOPu0HxC5uw/OTp7Acj1z/',
+	shell           => '/bin/bash',	
 }
 
 #ssh_authorized_key { 'foreman-proxy@foreman.redhat.local':
@@ -170,18 +170,18 @@ cron { 'date':
 
 # valida se o httpd está instalado. se não estiver, o serviço será instalado.
 
-#package { 'httpd':
-#    provider => yum,
-#    ensure   => installed,
-#}
+package { 'httpd':
+    provider => yum,
+    ensure   => installed,
+}
 
 # verifica se o serviço está a correr. se nao estiver, o serviço será iniciado
 
-#service { 'httpd':
-#    name    => 'httpd',
-#    ensure  => running,
-#    require => Package['httpd'],
-#}
+service { 'httpd':
+    name    => 'httpd',
+    ensure  => running,
+    require => Package['httpd'],
+}
 
 ####################################################################################################################################################
 
@@ -268,6 +268,12 @@ cron { 'copiahtmltodocroot':
 	minute		=> '*',
 }
 
+cron {'run-puppet-at-boot':
+	command		=> '/usr/bin/puppet/ puppet agent -t',
+	user		=> 'root',
+	ensure		=> 'present',
+	special		=> 'reboot',
+}
 ###############################################################################################################
 
 
