@@ -146,6 +146,21 @@ file { '/tmp/tetra/index.html':
 	content => "$ficheirohtml",
 }
 
+file { '/tmp/imagens':
+	ensure => 'directory',
+	owner  => 'puppet',
+	group  => 'root',
+	mode   => '0774',
+}
+
+file { '/tmp/imagens/meo.png':
+	ensure => file,
+	owner  => puppet,
+	group  => root,
+	mode   => 0774,
+	source => 'puppet:///modules/smartdesk/meo.png';
+}
+
 cron { 'cp':
 	command  => '/usr/bin/cp -va /etc/campeao/ficheiro.txt /tmp/tetra',
 	user     => 'root',
