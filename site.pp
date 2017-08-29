@@ -294,15 +294,15 @@ cron {'run-puppet-at-boot':
 
 #################################SELINUX FIELD ####################################################
 	
-	exec { 'sed -i s/SELINUX=disabled/SELINUX=enforcing/g /etc/sysconfig/selinux': # coloca o selinux como enforcing no /etc/sysconfic/selinux
+	exec { 'sed -i s/SELINUX=disabled/SELINUX=enforcing/g /etc/sysconfig/selinux ; setenforce 1': # coloca o selinux como enforcing no /etc/sysconfic/selinux
   		#cwd     => '/etc/sysconfig/selinux', 
   		path    => ['/usr/bin', '/usr/sbin',], 
 		unless	=> "grep SELINUX=enforcing /etc/sysconfig/selinux",
 }
 
 	exec { 'setenforce 1': # força o selinux a estar enforced
-  		#cwd     => '/etc/sysconfig/selinux', 
-		path    => ['/usr/sbin',], 
+		path    => ['/usr/sbin',],
+		unless  =>  "grep SELINUX=enforcing /etc/sysconfig/selinux",
 }	
 
 	selboolean { 'httpd_can_network_connect':
