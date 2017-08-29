@@ -17,14 +17,35 @@ $ficheirohtml = '<h1>NOVO SITE</h1>
 $ficheirovazio = ''
 
 $hosts = '
-10.1.10.254 puppet-server.syone.int puppet-server
-10.1.10.250 puppet-client.syone.int puppet-client
-10.1.10.249 test-pp.syone.int test-pp
+192.168.122.51 foreman.redhat.local foreman
+192.168.122.55 puppetmaster.redhat.local puppetmaster
 '
+
 $anotherone = '
 Qualquer coisa...
 '
 ############ \declaração de variáveis#################
+
+
+
+class host_entries {
+
+	host { 'foreman.redhat.local':
+		ip				=> '192.168.122.51',
+		host_aliases	=> 'foreman',
+	} # end host foreman.redhat.local
+
+	host { 'puppetmaster.redhat.local':
+		ip				=> '192.168.122.55',
+		host_aliases	=> 'puppetmaster',
+	} # end host puppetmaster.redhat.local
+
+	host { 'puppetmaster2.redhat.local':
+		ip				=> '192.168.122.54',
+		host_aliases	=> 'puppetmaster2',
+	} # end host puppetmaster.redhat.local
+
+} # end host_entries CLASS
 
 
 
@@ -266,6 +287,16 @@ exec { 'cp -va index.html /var/www/bacalhau':
   cwd       => '/tmp/tetra', # vai buscar o index.html a este directorio
   path      => ['/usr/bin', '/usr/sbin',], # vai correr o comando 'cp' a partir destes directorios
   unless	=> "find /var/www -name bacalhau",
+}
+
+exec { 'echo ':
+	command      => '/bin/echo',
+	#path        => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
+	#creates     => '/file/created',
+	#cwd         => '/path/to/run/from',
+	#user        => 'user_to_run_as',
+	#unless      => 'test param-that-would-be-true',
+	#refreshonly => true,
 }
 
 ################################################################################################
