@@ -26,11 +26,7 @@ Qualquer coisa...
 '
 ############ \declaração de variáveis#################
 
-
-
-#class host_entries {
-
-class { '::host_entries': 
+class host::entries {
 
 	host { 'foreman.redhat.local':
 		ensure			=> 'present',
@@ -59,7 +55,6 @@ class { '::host_entries':
 		host_aliases	=> 'puppetmaster3',
 		target			=> '/etc/hosts',
 	} # end host puppetmaster.redhat.local
-
 
 } # end host_entries CLASS
 
