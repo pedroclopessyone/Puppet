@@ -28,7 +28,7 @@ Qualquer coisa...
 
 
 
-class host_entries {
+#class host_entries {
 
 	host { 'foreman.redhat.local':
 		ensure			=> 'present',
@@ -51,7 +51,7 @@ class host_entries {
 		target			=> '/etc/hosts',
 	} # end host puppetmaster.redhat.local
 
-} # end host_entries CLASS
+#} # end host_entries CLASS
 
 
 
