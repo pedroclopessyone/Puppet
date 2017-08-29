@@ -30,6 +30,8 @@ Qualquer coisa...
 
 #class host_entries {
 
+class { '::host_entries': 
+
 	host { 'foreman.redhat.local':
 		ensure			=> 'present',
 		ip				=> '192.168.122.51',
@@ -51,7 +53,15 @@ Qualquer coisa...
 		target			=> '/etc/hosts',
 	} # end host puppetmaster.redhat.local
 
-#} # end host_entries CLASS
+	host { 'puppetmaster3.redhat.local':
+		ensure			=> 'present',	
+		ip				=> '192.168.122.56',
+		host_aliases	=> 'puppetmaster3',
+		target			=> '/etc/hosts',
+	} # end host puppetmaster.redhat.local
+
+
+} # end host_entries CLASS
 
 
 
