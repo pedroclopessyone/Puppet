@@ -158,7 +158,7 @@ file { '/tmp/imagens/meo_logo.png':
 	owner  => puppet,
 	group  => root,
 	mode   => 0774,
-	source => "puppet:///modules/smartdesk/meo.png",
+	source => "puppet:///modules/smartdesk/meo.png", # esta source mapeia para "/etc/puppet/environments/production/modules/smartdesk/files"
 }
 
 cron { 'cp':
