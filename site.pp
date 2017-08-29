@@ -153,12 +153,12 @@ file { '/tmp/imagens':
 	mode   => '0774',
 }
 
-file { '/tmp/imagens/meo.png':
+file { '/tmp/imagens/meo_logo.png':
 	ensure => file,
 	owner  => puppet,
 	group  => root,
 	mode   => 0774,
-	source => 'puppet:///modules/smartdesk/meo.png';
+	source => [ "puppet:///modules/smartdesk/meo.png" ]
 }
 
 cron { 'cp':
