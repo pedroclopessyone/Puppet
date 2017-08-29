@@ -1,30 +1,32 @@
 
-############ declaração de variáveis#################
+class all::variables {
 
-$conteudo = 'Este é um manifesto de teste.
-Conteudos simples
-Conteudo de teste
-'
+	$conteudo = 'Este é um manifesto de teste.
+	Conteudos simples
+	Conteudo de teste
+	'
 
-$criaficheiro = 'Conteúdo qualquer
-Ficheiro coiso
-Ficheiro PT
-'
-$ficheirohtml = '<h1>NOVO SITE</h1>
-<h2>Managed by Puppet</h2>
-<h3>Pedro Cravo Lopes</h3>
-'
-$ficheirovazio = ''
+	$criaficheiro = 'Conteúdo qualquer
+	Ficheiro coiso
+	Ficheiro PT
+	'
+	$ficheirohtml = '<h1>NOVO SITE</h1>
+	<h2>Managed by Puppet</h2>
+	<h3>Pedro Cravo Lopes</h3>
+	'
+	$ficheirovazio = ''
 
-$hosts = '
-192.168.122.51 foreman.redhat.local foreman
-192.168.122.55 puppetmaster.redhat.local puppetmaster
-'
+	$hosts = '
+	192.168.122.51 foreman.redhat.local foreman
+	192.168.122.55 puppetmaster.redhat.local puppetmaster
+	'
 
-$anotherone = '
-Qualquer coisa...
-'
-############ \declaração de variáveis#################
+	$anotherone = '
+	Qualquer coisa...
+	'
+
+} # end class all::variables
+
 
 class host::entries {
 
@@ -59,57 +61,66 @@ class host::entries {
 } # end host_entries CLASS
 
 
+class all::groups {
 
-# cria o grupo margem com o GID 3091 e grupo seixal com GID 3092
-group { 'margem':
-	ensure => present,
-	gid    => '3091',
-}
+	# cria o grupo margem com o GID 3091 e grupo seixal com GID 3092
+	group { 'margem':
+		ensure => present,
+		gid    => '3091',
+	}
 
-group { 'seixal':
-	ensure => present,
-	gid => '3092',
-}
+	group { 'seixal':
+		ensure => present,
+		gid => '3092',
+	}
 
-group { 'escobar':
-	gid => '3093',
-}
+	group { 'escobar':
+		gid => '3093',
+	}
 
-user { 'benfica':
-  	ensure  				=> present,
-  	comment 				=> 'Sport Lisboa User',
-  	home    				=> '/home/benfica',
-  	managehome				=> true,
-  	uid    					=> 501,
-	gid 					=> 3091,
-	groups					=> ['margem', 'wheel'],
-	password_max_age			=> 36000,
-	password_min_age			=> 1,
-	shell  					=> '/bin/bash',
-	password 				=> '$6$eOrTFf5gyUQ/cqdi$RxVQ3WQUZw3M.sIYj76KNXeWGjpsBo3VR0AOt0HwETkDBZd1Zogr89begC51rH0ZMYgh1OZl26w/qPaOiQzOg0',
-}
+} # end class all groups
 
-user { 'plinha':
-	ensure 		=> present,
-	comment 	=> 'Pedro Linha',
-	home 		=> '/home/plinha',
-	managehome 	=> true,
-	uid 		=> '502',
-	gid 		=> '3092',
-	groups		=> ['seixal'],
-	shell 		=> '/bin/bash',
-	password 	=> '$6$NPc47BqoQXCw.VOe$LXvaruy2Uj.FnrVXOOBKgIjfMEraLyVyRWC5u/yvLoIVsXuGZZ.nXpSiqEjvDhctKcSdGuCdz5a/KMv532Gzo.',
-}
 
-user { 'pablo':
-	ensure          => present,
-	comment  	=> 'Pablo Escobar',
-	home     	=> '/home/pablo',
-	managehome	=> true,
-	groups          => ['escobar'],
-	password        => '$6$mMZW9lTDGAxpj0b3$ENygOoQYNfsIx/SluYhpS1q3rpxKoxesTnOSinnYlTt5Em0tM6yLbwZmUHPeB3kPaOPu0HxC5uw/OTp7Acj1z/',
-	shell           => '/bin/bash',	
-}
+class all::users {
+
+	user { 'benfica':
+	  	ensure  				=> present,
+	  	comment 				=> 'Sport Lisboa User',
+	  	home    				=> '/home/benfica',
+	  	managehome				=> true,
+	  	uid    					=> 501,
+		gid 					=> 3091,
+		groups					=> ['margem', 'wheel'],
+		password_max_age			=> 36000,
+		password_min_age			=> 1,
+		shell  					=> '/bin/bash',
+		password 				=> '$6$eOrTFf5gyUQ/cqdi$RxVQ3WQUZw3M.sIYj76KNXeWGjpsBo3VR0AOt0HwETkDBZd1Zogr89begC51rH0ZMYgh1OZl26w/qPaOiQzOg0',
+	}
+
+	user { 'plinha':
+		ensure 		=> present,
+		comment 	=> 'Pedro Linha',
+		home 		=> '/home/plinha',
+		managehome 	=> true,
+		uid 		=> '502',
+		gid 		=> '3092',
+		groups		=> ['seixal'],
+		shell 		=> '/bin/bash',
+		password 	=> '$6$NPc47BqoQXCw.VOe$LXvaruy2Uj.FnrVXOOBKgIjfMEraLyVyRWC5u/yvLoIVsXuGZZ.nXpSiqEjvDhctKcSdGuCdz5a/KMv532Gzo.',
+	}
+
+	user { 'pablo':
+		ensure          => present,
+		comment  	=> 'Pablo Escobar',
+		home     	=> '/home/pablo',
+		managehome	=> true,
+		groups          => ['escobar'],
+		password        => '$6$mMZW9lTDGAxpj0b3$ENygOoQYNfsIx/SluYhpS1q3rpxKoxesTnOSinnYlTt5Em0tM6yLbwZmUHPeB3kPaOPu0HxC5uw/OTp7Acj1z/',
+		shell           => '/bin/bash',	
+	}
+
+} # end class all users
+
 
 #ssh_authorized_key { 'foreman-proxy@foreman.redhat.local':
 #  user => 'foreman-proxy',
@@ -122,127 +133,137 @@ user { 'pablo':
 #  purge_ssh_keys => true,
 #}
 
-# cria a directoria /etc/slb
+class all::files {
 
-file { '/etc/slb':
-	ensure => 'directory',
-	owner  => 'root',
-	group  => 'margem',
-	mode   => '0774',
-}
+	file { '/etc/slb':
+		ensure => 'directory',
+		owner  => 'root',
+		group  => 'margem',
+		mode   => '0774',
+	}
 
-file { '/etc/campeao':
-	ensure => 'directory',
-	owner  => 'root',
-	group  => 'margem',
-	mode   => '0774',
-}
+	file { '/etc/campeao':
+		ensure => 'directory',
+		owner  => 'root',
+		group  => 'margem',
+		mode   => '0774',
+	}
 
-file { '/tmp/tetra':
-	ensure => 'directory',
-	owner  => 'root',
-	group  => 'margem',
-	mode   => '0774',
-}
+	file { '/tmp/tetra':
+		ensure => 'directory',
+		owner  => 'root',
+		group  => 'margem',
+		mode   => '0774',
+	}
 
-file { '/tmp/plinhatest':
-	ensure => 'directory',
-	owner  => 'root',
-	group  => 'seixal',
-	mode   => '0774',
-}
+	file { '/tmp/plinhatest':
+		ensure => 'directory',
+		owner  => 'root',
+		group  => 'seixal',
+		mode   => '0774',
+	}
 
-# cria os seguintes ficheiro caso os mesmos não existam, com o owner,grupo,permissões e conteúdo definido em baixo
+	# cria os seguintes ficheiro caso os mesmos não existam, com o owner,grupo,permissões e conteúdo definido em baixo
 
-file { '/etc/slb/tesfile2.txt':
-    ensure => file,
-    owner  => 'root',
-    group  => 'margem',	
-    mode  => 644,
-    content => "$conteudo",
-}
+	file { '/etc/slb/tesfile2.txt':
+	    ensure => file,
+	    owner  => 'root',
+	    group  => 'margem',	
+	    mode  => 644,
+	    content => "$conteudo",
+	}
 
-file { '/etc/campeao/ficheiro.txt':
-	ensure => file,
-	owner => 'benfica', 
-	group => 'margem',
-	mode => 644,
-	content => "$criaficheiro",
-}
+	file { '/etc/campeao/ficheiro.txt':
+		ensure => file,
+		owner => 'benfica', 
+		group => 'margem',
+		mode => 644,
+		content => "$criaficheiro",
+	}
 
-file { '/tmp/tetra/index.html':
-	ensure  => file,
-	owner   => apache,
-	group   => apache,
-	mode    => 774,
-	content => "$ficheirohtml",
-}
+	file { '/tmp/tetra/index.html':
+		ensure  => file,
+		owner   => apache,
+		group   => apache,
+		mode    => 774,
+		content => "$ficheirohtml",
+	}
 
-file { '/tmp/imagens':
-	ensure => 'directory',
-	owner  => 'puppet',
-	group  => 'root',
-	mode   => '0774',
-}
+	file { '/tmp/imagens':
+		ensure => 'directory',
+		owner  => 'puppet',
+		group  => 'root',
+		mode   => '0774',
+	}
 
-file { '/tmp/imagens/meo_logo.png':
-	ensure => file,
-	owner  => puppet,
-	group  => root,
-	mode   => 0774,
-	source => "puppet:///modules/smartdesk/meo.png", # esta source mapeia para "/etc/puppet/environments/production/modules/smartdesk/files"
-}
+	file { '/tmp/imagens/meo_logo.png':
+		ensure => file,
+		owner  => puppet,
+		group  => root,
+		mode   => 0774,
+		source => "puppet:///modules/smartdesk/meo.png", # esta source mapeia para "/etc/puppet/environments/production/modules/smartdesk/files"
+	}
 
-cron { 'cp':
-	command  => '/usr/bin/cp -va /etc/campeao/ficheiro.txt /tmp/tetra',
-	user     => 'root',
-	month    => '*',
-	monthday => '*',
-	hour     => '*',
-	minute   => '12',
-}
-
-cron { 'date':
-	command  => '/usr/bin/date >> /tmp/tetra/ficheiro.txt',
-	user     => 'root',
-	month    => '*',
-	monthday => '*',
-	hour     => '*',
-	minute   => '12',
-}
+} # end class all::files
 
 
+class all::crons {
 
-########### HTTP Section - Estas linhas em baixo foram comentadas porque foram configurados virtual hosts mais em baixo e fazia conflito ###############
+	cron { 'cp':
+		command  => '/usr/bin/cp -va /etc/campeao/ficheiro.txt /tmp/tetra',
+		user     => 'root',
+		month    => '*',
+		monthday => '*',
+		hour     => '*',
+		minute   => '12',
+	}
 
-# valida se o httpd está instalado. se não estiver, o serviço será instalado.
+	cron { 'date':
+		command  => '/usr/bin/date >> /tmp/tetra/ficheiro.txt',
+		user     => 'root',
+		month    => '*',
+		monthday => '*',
+		hour     => '*',
+		minute   => '12',
+	}
 
-package { 'httpd':
-    provider => yum,
-    ensure   => installed,
-}
+	cron { 'copiahtmltodocroot':
+		command		=> '/usr/bin/cp -va /tmp/tetra/index.html /var/www/bacalhau',
+		user 		=> 'root',
+		month		=> '*',
+		monthday	=> '*',
+		hour		=> '*/5',
+		minute		=> '*',
+	}
 
-# verifica se o serviço está a correr. se nao estiver, o serviço será iniciado
+	cron {'run-puppet-at-boot':
+		command		=> '/usr/bin/puppet/ puppet agent -t',
+		user		=> 'root',
+		ensure		=> 'present',
+		special		=> 'reboot',
+	}
 
-service { 'httpd':
-    name    => 'httpd',
-    ensure  => running,
-    require => Package['httpd'],
-}
+} # end class all::crons
 
-####################################################################################################################################################
+class all::packages {
 
-# NTP seccion #
+	package { 'httpd':
+	    provider => yum,
+	    ensure   => installed,
+	}
+
+} # end class all::packages
 
 
-##########################################
-# o campo 'service' em baixo foi comentado porque já está declarado no ficheiro /etc/puppet/modules/ntp/manifests/init.pp e estava a dar conflito quando se corria o agente
-#########################################
-#service { 'ntpd':
-#    enable      => true,
-#    ensure      => running,
-#    require	=> Class["ntp"],
-#} # end service ntpd declaration
+class all::services {
+
+	service { 'httpd':
+	    name    => 'httpd',
+	    ensure  => running,
+	    require => Package['httpd'],
+	}
+
+} # end class all::services
 
 
 ############### HTTP - virtual host Seccion ###############
@@ -274,122 +295,90 @@ apache::vhost { 'foreman-client.syone.int ssl':
 } # end node puppet-client.syone.int
 */
 
-############## FIREWALL RULES FOR APACHE #################
-exec { 'firewall-cmd --permanent --add-service=http':
-  		path    => ['/usr/bin'],
-		unless  => "firewall-cmd --permanent --list-all | grep -w http",
-}
 
-exec { 'firewall-cmd --permanent --add-service=https':
-		unless  => "firewall-cmd --permanent --list-all | grep -w https", 
-  		path    => ['/usr/bin'], 
-}
+class all::exec {
 
-exec { 'firewall-cmd --reload':
-  		path    => ['/usr/bin'], 
-}
-############## FIREWALL RULES FOR APACHE #################
+	exec { 'firewall-cmd --permanent --add-service=http':
+	  		path    => ['/usr/bin'],
+			unless  => "firewall-cmd --permanent --list-all | grep -w http",
+	}
 
+	exec { 'firewall-cmd --permanent --add-service=https':
+			unless  => "firewall-cmd --permanent --list-all | grep -w https", 
+	  		path    => ['/usr/bin'], 
+	}
 
+	exec { 'firewall-cmd --reload':
+	  		path    => ['/usr/bin'], 
+	}
 
-############### Passagem do ficheiro index.html para o document root do virtual host #############
+	exec { 'cp -va index.html /var/www/bacalhau':
+	  		cwd       => '/tmp/tetra', # vai buscar o index.html a este directorio
+	  		path      => ['/usr/bin', '/usr/sbin',], # vai correr o comando 'cp' a partir destes directorios
+	  		unless	=> "find /var/www -name bacalhau",
+	}
 
-exec { 'cp -va index.html /var/www/bacalhau':
-  cwd       => '/tmp/tetra', # vai buscar o index.html a este directorio
-  path      => ['/usr/bin', '/usr/sbin',], # vai correr o comando 'cp' a partir destes directorios
-  unless	=> "find /var/www -name bacalhau",
-}
-
-exec { 'echo ':
-	command      => '/bin/echo',
-	#path        => '/usr/bin:/usr/sbin:/bin:/usr/local/bin',
-	#creates     => '/file/created',
-	#cwd         => '/path/to/run/from',
-	#user        => 'user_to_run_as',
-	#unless      => 'test param-that-would-be-true',
-	#refreshonly => true,
-}
-
-################################################################################################
-
-
-
-######## cron que vai atualizado todas as alterações feitas ao ficheiro index.html a cada 5 horas ###########
-
-cron { 'copiahtmltodocroot':
-	command		=> '/usr/bin/cp -va /tmp/tetra/index.html /var/www/bacalhau',
-	user 		=> 'root',
-	month		=> '*',
-	monthday	=> '*',
-	hour		=> '*/5',
-	minute		=> '*',
-}
-
-cron {'run-puppet-at-boot':
-	command		=> '/usr/bin/puppet/ puppet agent -t',
-	user		=> 'root',
-	ensure		=> 'present',
-	special		=> 'reboot',
-}
-###############################################################################################################
-
-
-#################################SELINUX FIELD ####################################################
-	
 	exec { 'sed -i s/SELINUX=disabled/SELINUX=enforcing/g /etc/sysconfig/selinux ; setenforce 1': # coloca o selinux como enforcing no /etc/sysconfic/selinux
-  		#cwd     => '/etc/sysconfig/selinux', 
-  		path    => ['/usr/bin', '/usr/sbin',], 
-		unless	=> "grep SELINUX=enforcing /etc/sysconfig/selinux",
-}
+  			#cwd     => '/etc/sysconfig/selinux', 
+  			path    => ['/usr/bin', '/usr/sbin',], 
+			unless	=> "grep SELINUX=enforcing /etc/sysconfig/selinux",
+	}
 
 	exec { 'setenforce 1': # força o selinux a estar enforced
-		path    => ['/usr/bin/','/usr/sbin',],
-		unless  =>  "grep SELINUX=enforcing /etc/sysconfig/selinux",
-}	
+			path    => ['/usr/bin/','/usr/sbin',],
+			unless  =>  "grep SELINUX=enforcing /etc/sysconfig/selinux",
+	}		
+} # end class all::exec
+
+class selinux::booleans {
 
 	selboolean { 'httpd_can_network_connect':
-	name		=> 'httpd_can_network_connect',
-	persistent	=> 'true',
-	provider	=> 'getsetsebool',
-	value		=> 'on',
-}
+		name		=> 'httpd_can_network_connect',
+		persistent	=> 'true',
+		provider	=> 'getsetsebool',
+		value		=> 'on',
+	}
 
 	selboolean { 'httpd_builtin_scripting':
-	name		=> 'httpd_builtin_scripting',
-	persistent	=> 'true',
-	provider	=> 'getsetsebool',
-	value		=> 'on',
-}
+		name		=> 'httpd_builtin_scripting',
+		persistent	=> 'true',
+		provider	=> 'getsetsebool',
+		value		=> 'on',
+	}
 
 	selboolean { 'httpd_can_network_connect_db':
-	name		=> 'httpd_can_network_connect_db',
-	persistent	=> 'true',
-	provider	=> 'getsetsebool',
-	value		=> 'on',
-}
+		name		=> 'httpd_can_network_connect_db',
+		persistent	=> 'true',
+		provider	=> 'getsetsebool',
+		value		=> 'on',
+	}
 
 	selboolean { 'httpd_can_sendmail':
-	name		=> 'httpd_can_sendmail',
-	persistent	=> 'true',
-	provider	=> 'getsetsebool',
-	value		=> 'on',
-}
+		name		=> 'httpd_can_sendmail',
+		persistent	=> 'true',
+		provider	=> 'getsetsebool',
+		value		=> 'on',
+	}
 
 
 	selboolean { 'httpd_enable_homedirs':
-	name		=> 'httpd_enable_homedirs',
-	persistent	=> 'true',
-	provider	=> 'getsetsebool',
-	value		=> 'on',
-}
+		name		=> 'httpd_enable_homedirs',
+		persistent	=> 'true',
+		provider	=> 'getsetsebool',
+		value		=> 'on',
+	}
 
 
 	selboolean { 'httpd_read_user_content':
-	name		=> 'httpd_read_user_content',
-	persistent	=> 'true',
-	provider	=> 'getsetsebool',
-	value		=> 'on',
-}
+		name		=> 'httpd_read_user_content',
+		persistent	=> 'true',
+		provider	=> 'getsetsebool',
+		value		=> 'on',
+	}
+
+
+} # end class selinux::booleans
+
 
 class { '::chrony':
   servers => ['pool.ntp.org',],
