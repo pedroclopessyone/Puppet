@@ -301,7 +301,7 @@ cron {'run-puppet-at-boot':
 }
 
 	exec { 'setenforce 1': # força o selinux a estar enforced
-		path    => ['/usr/sbin','/usr/bin/grep',],
+		path    => ['/usr/bin/','/usr/sbin',],
 		unless  =>  "grep SELINUX=enforcing /etc/sysconfig/selinux",
 }	
 
